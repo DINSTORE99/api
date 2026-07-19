@@ -3,16 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>DIN PAYMENT</title>
 
 <link rel="stylesheet" href="style.css">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</head>
 
+</head>
 <body>
 
 <div class="container">
@@ -22,8 +23,11 @@
 <p>Payment Dashboard</p>
 </div>
 
+<!-- SALDO -->
+
 <div class="card">
-<h2>Saldo</h2>
+
+<h2>💰 Saldo</h2>
 
 <h1 id="saldo">Rp 0</h1>
 
@@ -33,14 +37,16 @@ Refresh Saldo
 
 </div>
 
+<!-- DEPOSIT -->
+
 <div class="card">
 
-<h2>Deposit QRIS</h2>
+<h2>📥 Deposit QRIS</h2>
 
 <input
 type="number"
 id="depositNominal"
-placeholder="Masukkan nominal">
+placeholder="Masukkan Nominal">
 
 <button onclick="deposit()">
 Buat QRIS
@@ -50,9 +56,11 @@ Buat QRIS
 
 </div>
 
+<!-- WITHDRAW -->
+
 <div class="card">
 
-<h2>Withdraw</h2>
+<h2>🏦 Withdraw</h2>
 
 <select id="wallet">
 
@@ -73,7 +81,7 @@ placeholder="Nomor Tujuan">
 
 <input
 type="number"
-id="nominal"
+id="withdrawNominal"
 placeholder="Nominal">
 
 <button onclick="withdraw()">
@@ -82,22 +90,26 @@ Tarik Saldo
 
 </div>
 
+<!-- RIWAYAT -->
+
 <div class="card">
 
-<h2>Riwayat Transaksi</h2>
+<h2>📜 Riwayat Transaksi</h2>
 
-<button onclick="riwayat()">
+<button onclick="loadRiwayat()">
 Refresh Riwayat
 </button>
 
-<div id="history">
-Belum ada data
-</div>
+<div id="riwayat">
+
+Belum ada transaksi
 
 </div>
 
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+</div>
+
 <script src="script.js"></script>
 
 </body>
