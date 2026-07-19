@@ -2,73 +2,103 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>DINSTORE BOT PANEL</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DIN PAYMENT</title>
 
 <link rel="stylesheet" href="style.css">
 
-<script src="/socket.io/socket.io.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
 
 <div class="container">
 
-<h1>🤖 DINSTORE BOT</h1>
-
-<div class="card">
-
-<h3>Status Server</h3>
-
-<div id="serverStatus" class="offline">
-🔴 OFFLINE
-</div>
-
+<div class="header">
+<h1>💳 DIN PAYMENT</h1>
+<p>Payment Dashboard</p>
 </div>
 
 <div class="card">
+<h2>Saldo</h2>
 
-<h3>Tambah Bot</h3>
+<h1 id="saldo">Rp 0</h1>
 
-<input
-id="number"
-type="text"
-placeholder="628xxxxxxxxxx"
-/>
-
-<button id="connectBtn">
-Hubungkan
+<button onclick="cekSaldo()">
+Refresh Saldo
 </button>
 
 </div>
 
 <div class="card">
 
-<h3>Daftar Bot</h3>
+<h2>Deposit QRIS</h2>
 
-<div id="sessions">
+<input
+type="number"
+id="depositNominal"
+placeholder="Masukkan nominal">
 
-Belum ada bot.
+<button onclick="deposit()">
+Buat QRIS
+</button>
 
-</div>
+<div id="depositResult"></div>
 
 </div>
 
 <div class="card">
 
-<h3>Log</h3>
+<h2>Withdraw</h2>
 
-<div id="logs">
+<select id="wallet">
 
-<div>Menunggu koneksi...</div>
+<option value="dana">DANA</option>
 
+<option value="ovo">OVO</option>
+
+<option value="gopay">GoPay</option>
+
+<option value="shopeepay">ShopeePay</option>
+
+</select>
+
+<input
+type="text"
+id="nomor"
+placeholder="Nomor Tujuan">
+
+<input
+type="number"
+id="nominal"
+placeholder="Nominal">
+
+<button onclick="withdraw()">
+Tarik Saldo
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>Riwayat Transaksi</h2>
+
+<button onclick="riwayat()">
+Refresh Riwayat
+</button>
+
+<div id="history">
+Belum ada data
 </div>
 
 </div>
 
 </div>
 
-<script src="app.js"></script>
+<script src="script.js"></script>
 
 </body>
 </html>
