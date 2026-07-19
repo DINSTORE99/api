@@ -79,28 +79,32 @@ async function deposit() {
 console.log(data);
 
 if (data.status === "success") {
+if (data.status === "success") {
+
+    const qr = data.data.qris_url;
 
     document.getElementById("depositResult").innerHTML = `
-    <center>
+        <div style="text-align:center">
 
-    <h2>QRIS PAYMENT</h2>
+            <img
+                src="${qr}"
+                style="width:280px;max-width:100%;background:#fff;padding:10px;border-radius:12px;">
 
-    <img src="${data.data.qris_url}"
-         style="width:280px;max-width:100%;border-radius:12px;">
+            <h2 style="margin-top:15px">
+                Rp ${Number(data.data.total_amount).toLocaleString("id-ID")}
+            </h2>
 
-    <br><br>
+            <p>Nominal : Rp ${Number(data.data.amount).toLocaleString("id-ID")}</p>
 
-    <h2>Rp ${Number(data.data.total_amount).toLocaleString("id-ID")}</h2>
+            <p>Fee : Rp ${Number(data.data.fee).toLocaleString("id-ID")}</p>
 
-    <p>Nominal : Rp ${Number(data.data.amount).toLocaleString("id-ID")}</p>
+            <p>ID : ${data.data.transaction_id}</p>
 
-    <p>Fee : Rp ${Number(data.data.fee).toLocaleString("id-ID")}</p>
+            <p>Berlaku sampai</p>
 
-    <p><b>ID</b><br>${data.data.transaction_id}</p>
+            <b>${new Date(data.data.expired_at).toLocaleString("id-ID")}</b>
 
-    <p>Expired<br>${new Date(data.data.expired_at).toLocaleString("id-ID")}</p>
-
-    </center>
+        </div>
     `;
 
     Swal.fire(
@@ -108,6 +112,8 @@ if (data.status === "success") {
         "QRIS berhasil dibuat",
         "success"
     );
+
+}
 
 } else {
 
