@@ -81,32 +81,27 @@ console.log(data);
 if (data.status === "success") {
 
     document.getElementById("depositResult").innerHTML = `
-        <center>
+    <center>
 
-        <h2>QRIS PAYMENT</h2>
+    <h2>QRIS PAYMENT</h2>
 
-        <div id="qrcode"></div>
+    <img src="${data.data.qris_url}"
+         style="width:280px;max-width:100%;border-radius:12px;">
 
-        <br>
+    <br><br>
 
-        <h2>Rp ${Number(data.data.total_amount).toLocaleString("id-ID")}</h2>
+    <h2>Rp ${Number(data.data.total_amount).toLocaleString("id-ID")}</h2>
 
-        <p>Nominal : Rp ${Number(data.data.amount).toLocaleString("id-ID")}</p>
+    <p>Nominal : Rp ${Number(data.data.amount).toLocaleString("id-ID")}</p>
 
-        <p>Fee : Rp ${Number(data.data.fee).toLocaleString("id-ID")}</p>
+    <p>Fee : Rp ${Number(data.data.fee).toLocaleString("id-ID")}</p>
 
-        <p><b>ID</b><br>${data.data.transaction_id}</p>
+    <p><b>ID</b><br>${data.data.transaction_id}</p>
 
-        <p>Expired<br>${new Date(data.data.expired_at).toLocaleString("id-ID")}</p>
+    <p>Expired<br>${new Date(data.data.expired_at).toLocaleString("id-ID")}</p>
 
-        </center>
+    </center>
     `;
-
-    new QRCode(document.getElementById("qrcode"), {
-        text: data.data.qris_url,
-        width: 260,
-        height: 260
-    });
 
     Swal.fire(
         "Berhasil",
@@ -117,7 +112,7 @@ if (data.status === "success") {
 } else {
 
     document.getElementById("depositResult").innerHTML =
-        `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+    `<pre>${JSON.stringify(data, null, 2)}</pre>`;
 
 }
     
