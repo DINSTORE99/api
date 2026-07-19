@@ -75,17 +75,51 @@ async function deposit() {
 );
     
     const data = await res.json();
-    
-    console.log(data);
-    
-    document.getElementById("depositResult").innerHTML =
-      `<pre>${JSON.stringify(data, null, 2)}</pre>`;
-    
+
+console.log(data);
+
+if (data.status === "success") {
+
+    document.getElementById("depositResult").innerHTML = `
+        <center>
+
+        <h2>QRIS PAYMENT</h2>
+
+        <div id="qrcode"></div>
+
+        <br>
+
+        <h2>Rp ${Number(data.data.total_amount).toLocaleString("id-ID")}</h2>
+
+        <p>Nominal : Rp ${Number(data.data.amount).toLocaleString("id-ID")}</p>
+
+        <p>Fee : Rp ${Number(data.data.fee).toLocaleString("id-ID")}</p>
+
+        <p><b>ID</b><br>${data.data.transaction_id}</p>
+
+        <p>Expired<br>${new Date(data.data.expired_at).toLocaleString("id-ID")}</p>
+
+        </center>
+    `;
+
+    new QRCode(document.getElementById("qrcode"), {
+        text: data.data.qris_url,
+        width: 260,
+        height: 260
+    });
+
     Swal.fire(
-      "Berhasil",
-      "Deposit berhasil dibuat",
-      "success"
+        "Berhasil",
+        "QRIS berhasil dibuat",
+        "success"
     );
+
+} else {
+
+    document.getElementById("depositResult").innerHTML =
+        `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+
+}
     
   } catch (err) {
     
