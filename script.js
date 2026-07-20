@@ -47,19 +47,18 @@ async function deposit() {
 
         console.log(data);
 
-        if (data.status !== "success")
+        // API sekarang memakai "sukses"
+        if (data.status !== "sukses")
             throw new Error(data.message || "Gagal membuat QRIS");
 
-        const qr =
-            data.data.download_url ||
-            data.data.qris_url;
+        const d = data.data;
 
         document.getElementById("depositResult").innerHTML = `
         <div style="text-align:center">
 
             <img
             id="imgQris"
-            src="${qr}?t=${Date.now()}"
+            src="${d.url_qris}?t=${Date.now()}"
             style="
             width:300px;
             max-width:100%;
@@ -69,22 +68,22 @@ async function deposit() {
             ">
 
             <h2 style="margin-top:20px;color:#00ff99">
-            Rp ${Number(data.data.total_amount || data.data.amount).toLocaleString("id-ID")}
+            Rp ${Number(d.jumlah_total).toLocaleString("id-ID")}
             </h2>
 
             <p>Nominal :
-            Rp ${Number(data.data.amount).toLocaleString("id-ID")}</p>
+            Rp ${Number(d.jumlah).toLocaleString("id-ID")}</p>
 
             <p>Fee :
-            Rp ${Number(data.data.fee).toLocaleString("id-ID")}</p>
+            Rp ${Number(d.biaya).toLocaleString("id-ID")}</p>
 
             <p>ID :
-            ${data.data.transaction_id}</p>
+            ${d.id_transaksi}</p>
 
             <p>Expired :</p>
 
             <b>
-            ${new Date(data.data.expired_at).toLocaleString("id-ID")}
+            ${new Date(d.kedaluwarsa_pada).toLocaleString("id-ID")}
             </b>
 
         </div>
@@ -92,16 +91,17 @@ async function deposit() {
 
         const img = document.getElementById("imgQris");
 
-        img.onerror = function () {
+        img.onload = () => {
+            console.log("QRIS berhasil dimuat");
+        };
 
+        img.onerror = () => {
             document.getElementById("depositResult").innerHTML += `
             <br>
             <div style="color:red">
-            QRIS gagal dimuat.<br>
-            URL dari API tidak valid.
-            </div>
-            `;
-
+            ❌ Gambar QRIS tidak ditemukan.<br>
+            URL: ${d.url_qris}
+            </div>`;
         };
 
     } catch (err) {
@@ -115,7 +115,6 @@ async function deposit() {
     }
 
 }
-
 // =======================
 // WITHDRAW
 // =======================
